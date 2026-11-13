@@ -1,0 +1,54 @@
+
+{% extends 'quiz/base.html' %}
+
+{% block title %}My Results{% endblock %}
+
+{% block content %}
+
+    <h2>My Results</h2>
+
+    <p>Here you can review your previous test attempts.</p>
+
+    {% if attempts %}
+
+        <div class="results-table-container">
+
+            <table class="results-table">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Test</th>
+                        <th>Score</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for attempt in attempts %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ attempt.test.title }}</td>
+                            <td>
+                                {{ attempt.score }} / {{ attempt.max_score }}
+                            </td>
+                            <td>
+                                {{ attempt.submitted_at|date:"Y-m-d H:i" }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% else %}
+
+        <p>You haven't completed any tests yet.</p>
+
+    {% endif %}
+
+    <a href="{% url 'test_list' %}">Back to Tests</a>
+
+{% endblock %}

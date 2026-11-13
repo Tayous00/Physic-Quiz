@@ -1,0 +1,112 @@
+
+{% extends 'quiz/base.html' %}
+
+{% block title %}Teacher Dashboard{% endblock %}
+
+{% block content %}
+
+    <h2>Teacher Dashboard</h2>
+
+
+
+    <div class="dashboard-stats">
+
+        <div class="stat-card">
+            <h3>Total Tests</h3>
+            <p>{{ total_tests }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Total Questions</h3>
+            <p>{{ total_questions }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Student Attempts</h3>
+            <p>{{ total_attempts }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Average Performance</h3>
+            <p>{{ average_percentage }}%</p>
+        </div>
+
+    </div>
+
+
+
+    <p>
+        <a href="{% url 'teacher_results' %}">
+            View Student Results
+        </a>
+    </p>
+    
+    <a href="{% url 'create_test' %}">
+        Create New Test
+    </a>
+
+    <hr>
+
+    <h2>My Tests</h2>
+
+    {% for test in tests %}
+
+        <div>
+            <h3>{{ test.title }}</h3>
+
+            <p>{{ test.description }}</p>
+
+            <a href="{% url 'delete_test' test.id %}">
+                Delete Test
+            </a>
+
+            <a href="{% url 'edit_test' test.id %}">Edit Test</a>
+
+            <a href="{% url 'create_question' test.id %}">
+                Add Question
+            </a>
+
+            <p>Number of questions: {{ test.questions.count }}</p>
+
+            <h4>Questions:</h4>
+
+            {% for question in test.questions.all %}
+
+                <div>
+                    <p>
+                        {{ forloop.counter }}.
+                        {{ question.question_text }}
+                    </p>
+
+                    <a href="{% url 'edit_question' question.id %}">
+                        Edit
+                    </a>
+
+                    |
+
+                    <a href="{% url 'delete_question' question.id %}">
+                        Delete
+                    </a>
+                </div>
+
+            {% empty %}
+                <p>No questions in this test yet.</p>
+            {% endfor %}
+
+            <p>
+                Status:
+                {% if test.is_active %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
+            </p>
+        </div>
+
+        <hr>
+
+    {% empty %}
+        <p>You haven't created any tests yet.</p>
+    {% endfor %}
+
+{% endblock %}

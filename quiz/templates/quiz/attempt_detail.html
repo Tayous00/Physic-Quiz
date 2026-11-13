@@ -1,0 +1,69 @@
+
+{% extends 'quiz/base.html' %}
+
+{% block title %}Student Attempt Details{% endblock %}
+
+{% block content %}
+
+    <h2>Student Attempt Details</h2>
+
+    <div class="result-card">
+        <h3>{{ attempt.student.username }}</h3>
+
+        <p>Test: {{ attempt.test.title }}</p>
+
+        <div class="result-score">
+            {{ attempt.score }} / {{ attempt.max_score }}
+        </div>
+
+        <p>
+            Submitted:
+            {{ attempt.submitted_at|date:"Y-m-d H:i" }}
+        </p>
+    </div>
+
+    <h2>Answer Details</h2>
+
+    {% for answer in answers %}
+
+        <div class="question-card">
+
+            <h3>Question {{ forloop.counter }}</h3>
+
+            <p>{{ answer.question.question_text }}</p>
+
+            <p>
+                Student's answer:
+                <strong>{{ answer.get_selected_option_display }}</strong>
+            </p>
+
+            <p>
+                Correct answer:
+                <strong>
+                    {{ answer.question.get_correct_option_display }}
+                </strong>
+            </p>
+
+            {% if answer.is_correct %}
+                <p class="answer-correct">
+                    Correct Answer!
+                </p>
+            {% else %}
+                <p class="answer-incorrect">
+                    Incorrect Answer
+                </p>
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+
+        <p>No individual answers were found.</p>
+
+    {% endfor %}
+
+    <a href="{% url 'teacher_results' %}">
+        Back to Student Results
+    </a>
+
+{% endblock %}

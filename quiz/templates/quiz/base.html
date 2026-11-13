@@ -1,0 +1,51 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Physics Quiz Platform{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <h1>Physics Quiz Platform</h1>
+
+        <nav>
+            <a href="{% url 'test_list' %}">Home</a>
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'my_results' %}">My Results</a>
+
+                {% if user.is_staff %}
+                    <a href="{% url 'teacher_dashboard' %}">
+                        Teacher Dashboard
+                    </a>
+                {% endif %}
+
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">Login</a>
+
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>

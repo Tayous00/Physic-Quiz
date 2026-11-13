@@ -1,0 +1,24 @@
+
+{% extends 'quiz/base.html' %}
+
+{% block title %}Create Test{% endblock %}
+
+{% block content %}
+
+    <h2>Create a New Test</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Create Test</button>
+    </form>
+
+    <p>
+        <a href="{% url 'teacher_dashboard' %}">
+            Back to Dashboard
+        </a>
+    </p>
+
+{% endblock %}

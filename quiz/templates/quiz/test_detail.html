@@ -1,0 +1,67 @@
+
+{% extends 'quiz/base.html' %}
+
+{% block title %}{{ test.title }}{% endblock %}
+
+{% block content %}
+
+    <div class="test-header">
+        <h2>{{ test.title }}</h2>
+        <p>{{ test.description }}</p>
+        <p>Select one answer for each question.</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+
+        {% for question in questions %}
+
+            <div class="question-card">
+                <h3>Question {{ forloop.counter }}</h3>
+                <p>{{ question.question_text }}</p>
+
+                <label class="option">
+                    <input type="radio"
+                           name="question_{{ question.id }}"
+                           value="A"
+                           required>
+                    {{ question.option_a }}
+                </label>
+
+                <label class="option">
+                    <input type="radio"
+                           name="question_{{ question.id }}"
+                           value="B"
+                           required>
+                    {{ question.option_b }}
+                </label>
+
+                <label class="option">
+                    <input type="radio"
+                           name="question_{{ question.id }}"
+                           value="C"
+                           required>
+                    {{ question.option_c }}
+                </label>
+
+                <label class="option">
+                    <input type="radio"
+                           name="question_{{ question.id }}"
+                           value="D"
+                           required>
+                    {{ question.option_d }}
+                </label>
+            </div>
+
+        {% endfor %}
+
+        <button type="submit" class="submit-button">
+            Submit Answers
+        </button>
+    </form>
+
+{% endblock %}

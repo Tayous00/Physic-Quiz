@@ -1,0 +1,26 @@
+
+{% extends 'quiz/base.html' %}
+
+{% block title %}Add Question{% endblock %}
+
+{% block content %}
+
+    <h2>Add Question</h2>
+
+    <h3>Test: {{ test.title }}</h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Save Question</button>
+    </form>
+
+    <p>
+        <a href="{% url 'teacher_dashboard' %}">
+            Back to Dashboard
+        </a>
+    </p>
+
+{% endblock %}

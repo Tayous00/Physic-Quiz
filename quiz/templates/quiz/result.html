@@ -1,0 +1,31 @@
+
+{% extends 'quiz/base.html' %}
+
+{% block title %}Test Result{% endblock %}
+
+{% block content %}
+
+    <div class="result-card">
+
+        <h2>Test Completed!</h2>
+
+        <p>Your result:</p>
+
+        <div class="result-score">
+            {{ attempt.score }} / {{ attempt.max_score }}
+        </div>
+
+        <div class="result-percentage">
+            {{ percentage }}%
+        </div>
+
+        <p>
+            You answered {{ attempt.score }} out of
+            {{ attempt.max_score }} questions correctly.
+        </p>
+
+        <a href="{% url 'test_list' %}">Back to Tests</a>
+
+    </div>
+
+{% endblock %}

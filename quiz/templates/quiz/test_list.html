@@ -1,0 +1,24 @@
+
+{% extends 'quiz/base.html' %}
+
+{% block title %}Home - Physics Quiz{% endblock %}
+
+{% block content %}
+
+    <h2>Available Tests</h2>
+
+    {% for test in tests %}
+        <div>
+            <h3>{{ test.title }}</h3>
+            <p>{{ test.description }}</p>
+
+            <a href="{% url 'test_detail' test.id %}">
+                Start Test
+            </a>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No tests are currently available.</p>
+    {% endfor %}
+
+{% endblock %}
